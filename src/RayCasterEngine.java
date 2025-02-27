@@ -8,6 +8,10 @@ public class RayCasterEngine{
     private Dimension2D resolution;
     private double maxRenderDistance;
 
+    public RayCasterEngine(){
+
+    }
+
     public ArrayList<Ray> castRays(Player player, Map map){
         return null;
     }

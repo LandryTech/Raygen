@@ -1,5 +1,7 @@
 package src;
 
+import java.awt.geom.Point2D;
+
 public class Player {
 
     private double x;
@@ -35,7 +37,7 @@ public class Player {
         this.y = newY;
     }
 
-    public void setPos(java.awt.geom.Point2D newPoint) {
+    public void setPos(Point2D newPoint) {
         this.x = newPoint.getX();
         this.y = newPoint.getY();
     }

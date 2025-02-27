@@ -9,7 +9,7 @@ public class Ray{
 
     public Ray(){}
 
-    public void cast(Map map, double startX, double startY, double angle){
+    public void cast(double startX, double startY, double angle) {
     }
 
     public double[] getHitCoordinates(){
