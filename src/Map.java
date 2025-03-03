@@ -7,13 +7,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Map{
-    private int width;
-    private int height;
     private ArrayList<Double> x1 = new ArrayList<Double>();
     private ArrayList<Double> y1 = new ArrayList<Double>();
     private ArrayList<Double> x2 = new ArrayList<Double>();
     private ArrayList<Double> y2 = new ArrayList<Double>();
-    private int lastPosition;
     private int currentMap;
     private String[] mapNames = {"maps/default.svg"};
     public static Line2D.Double[] mapData;
