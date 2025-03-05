@@ -41,4 +41,16 @@ public class Player {
         this.x = newPoint.getX();
         this.y = newPoint.getY();
     }
+
+    public void moveForward(){
+        x += Math.cos(toRad(direction)) * speed;
+        y += Math.sin(toRad(direction)) * speed;
+    }
+
+    public void rotateLeft(double angle){
+        direction -= angle;
+    }
+    public void rotateRight(double angle){
+        direction += angle;
+    }
 }
