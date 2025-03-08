@@ -4,10 +4,10 @@ import java.awt.geom.Point2D;
 
 public class Player {
 
-    private double x;
-    private double y;
-    private double direction;
-    private double speed;
+    private static double x = 75;
+    private static double y = -50;
+    private static double direction = 0;
+    private static double speed = 0;
 
     public Player(double x, double y, double direction, double speed) {
         this.x = x;
@@ -16,15 +16,15 @@ public class Player {
         this.speed = speed;
     }
 
-    public double toRad(double degrees) {
+    public static double toRad(double degrees) {
         return Math.toRadians(degrees);
     }
 
-    public double[] getPosition() {
-        return new double[]{x, y};
+    public static Point2D.Double getPosition() {
+        return new Point2D.Double(x, y);
     }
 
-    public double getDirection() {
+    public static double getDirection() {
         return direction;
     }
 

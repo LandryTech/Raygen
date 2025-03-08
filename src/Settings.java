@@ -1,17 +1,40 @@
 package src;
 
-public class Settings{
+import java.awt.*;
+import java.awt.geom.Dimension2D;
+
+public abstract class Settings{
     private double mouseSensitivity;
-    private int resolutionWidth;
-    private int resolutionHeight;
+    private double resolutionWidth;
+    private double resolutionHeight;
     private double fov;
 
-    public Settings(){}
-
-    public void loadDefault(){
+    // Default constructor
+    public Settings() {
+        this.loadDefault();
     }
 
-    public void applySettings(){
+    // Parameterized constructor
+    public Settings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov) {
+        this.mouseSensitivity = mouseSensitivity;
+        this.resolutionWidth = resolutionWidth;
+        this.resolutionHeight = resolutionHeight;
+        this.fov = fov;
+    }
+
+    public void loadDefault(){
+        Dimension2D resolution = Toolkit.getDefaultToolkit().getScreenSize();
+        this.resolutionWidth = resolution.getWidth();
+        this.resolutionHeight = resolution.getHeight();
+        this.mouseSensitivity = 1.0; // Default sensitivity
+        this.fov = 90.0; // Default field of view
+    }
+
+    public void applySettings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov){
+        this.mouseSensitivity = mouseSensitivity;
+        this.resolutionWidth = resolutionWidth;
+        this.resolutionHeight = resolutionHeight;
+        this.fov = fov;
     }
 
     public void saveToFile(String filename){
@@ -21,5 +44,6 @@ public class Settings{
     }
 
     public void resetToDefault(){
+        this.loadDefault();
     }
 }

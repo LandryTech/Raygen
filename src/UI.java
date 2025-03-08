@@ -18,6 +18,7 @@ public class UI extends JFrame{
         JFrame frame = new JFrame(menuName);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
+        frame.setResizable(false);
         frame.setLayout(new BorderLayout());
 
         JPanel mapPanel = new JPanel();
