@@ -4,32 +4,28 @@ import java.awt.geom.Point2D;
 
 public class Player {
 
-    private static double x = 75;
-    private static double y = -50;
-    private static double direction = 0;
-    private static double speed = 0;
+    private double x = 75;
+    private double y = -50;
+    private double direction = 180;
+    private static final double MOVE_SPEED = 0.2;
 
-    public Player(double x, double y, double direction, double speed) {
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-        this.speed = speed;
-    }
+    public Player() {}
 
     public static double toRad(double degrees) {
         return Math.toRadians(degrees);
     }
 
-    public static Point2D.Double getPosition() {
+    public Point2D.Double getPosition() {
         return new Point2D.Double(x, y);
     }
 
-    public static double getDirection() {
+    public double getDirection() {
         return direction;
     }
 
     public void setDirection(double newDirection) {
-        this.direction = newDirection;
+        direction = newDirection % 360;
+        if (direction < 0) direction += 360;
     }
 
     public void setPos(double newX, double newY) {
@@ -43,14 +39,21 @@ public class Player {
     }
 
     public void moveForward(){
-        x += Math.cos(toRad(direction)) * speed;
-        y += Math.sin(toRad(direction)) * speed;
+        System.out.println("Player moving forward");
+        x += Math.cos(toRad(direction)) * MOVE_SPEED;
+        y += Math.sin(toRad(direction)) * MOVE_SPEED;
     }
-
+    public void moveBackward(){
+        System.out.println("Player moving backward");
+        x -= Math.cos(toRad(direction)) * MOVE_SPEED;
+        y -= Math.sin(toRad(direction)) * MOVE_SPEED;
+    }
     public void rotateLeft(double angle){
-        direction -= angle;
+        System.out.println("Rotating left by " + angle);
+        setDirection(direction - angle);
     }
     public void rotateRight(double angle){
-        direction += angle;
+        System.out.println("Rotating right by " + angle);
+        setDirection(direction + angle);
     }
 }

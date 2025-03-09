@@ -3,7 +3,7 @@ package src;
 import java.awt.*;
 import java.awt.geom.Dimension2D;
 
-public abstract class Settings{
+public class Settings{
     private double mouseSensitivity;
     private double resolutionWidth;
     private double resolutionHeight;

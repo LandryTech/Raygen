@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RayCasterEngine extends JPanel {
+    private Player player;
     private double fov = 90; // 90 degrees -> should come from settings later
-    private Dimension2D resolution = Toolkit.getDefaultToolkit().getScreenSize();
-    private int maxRenderDistance = 1000;
+    private final Dimension2D resolution = Toolkit.getDefaultToolkit().getScreenSize();
+    private final int maxRenderDistance = 1000;
     int width = (int)resolution.getWidth();
     int height= (int)resolution.getHeight();
     public static Line2D.Double[] lev2 = new Line2D.Double[]{
@@ -31,35 +32,36 @@ public class RayCasterEngine extends JPanel {
             new Line2D.Double(0, 40, 30, 40), new Line2D.Double(20, 40, 20, 50),
             new Line2D.Double(10, 50, 10, 60), new Line2D.Double(50, 20, 60, 20),
             new Line2D.Double(50, 40, 60, 40)};
-
-
     double[] closestDistances = new double[width];
-    public RayCasterEngine(){
-        repaint(0,0,(int)width, (int)height);
+
+    public RayCasterEngine(Player player){
+        this.player = player;
+        setFocusable(true);
+        requestFocus();
+        repaint();
+        //repaint(0,0,(int)width, (int)height);
     }
 
     public void paint(Graphics g){
         //g.fillRect(0,0,(int)width,(int)height);
-        List<Point2D.Double> intersections = castRays(Player.getPosition(), fov, closestDistances.length);
+        super.paintComponent(g);
+        List<Point2D.Double> intersections = castRays(player.getPosition(), player.getDirection(), fov, closestDistances.length);
         drawLevel((Graphics2D) g); //this is funny
     }
     public void drawLevel(Graphics2D g){
-
         for(int i = 0; i < closestDistances.length; i++){
             double distance = closestDistances[i];
             if(distance != Double.MAX_VALUE){
                 double wallHeight = 2000 / distance;
                 g.draw(new Line2D.Double(i, (double) height / 2 - wallHeight, i, (double) height / 2 + wallHeight));
             }
-
         }
-
     }
-    public List<Point2D.Double> castRays(Point2D.Double playerPosition, double fov , int rayCount){
-        List<Point2D.Double> intersections = new ArrayList<>();
 
+    public List<Point2D.Double> castRays(Point2D.Double playerPosition, double playerDirection, double fov, int rayCount){
+        List<Point2D.Double> intersections = new ArrayList<>();
         double angleIncrement = fov / rayCount;
-        double startAngle = -fov / 2;
+        double startAngle = playerDirection - (fov / 2);
 
         for(int i = 0; i < rayCount; i++){
             double angle = startAngle + i * angleIncrement;
@@ -68,7 +70,6 @@ public class RayCasterEngine extends JPanel {
                 intersections.add(intersection);
             }
         }
-
         return intersections;
     }
 
@@ -100,28 +101,30 @@ public class RayCasterEngine extends JPanel {
         return closestIntersection;
     }
 
-    public void renderScene(ArrayList<Ray> rays){
-    }
+    //public void renderScene(ArrayList<Ray> rays){}
+    //public void updateSettings(Settings settings) {}
+    //public void adjustView(){}
 
-    public void updateSettings(Settings settings) {
-    }
-
-    public void adjustView(){
-    }
     public Point2D.Double getIntersection(Line2D.Double L1, Line2D.Double L2){
-        //wikipedia equation turned into java
         double X1 = L1.getX1(), Y1 = L1.getY1();
         double X2 = L1.getX2(), Y2 = L1.getY2();
-
         double X3 = L2.getX1(), Y3 = L2.getY1();
         double X4 = L2.getX2(), Y4 = L2.getY2();
 
-        double denominator = ((X1-X2)*(Y3-Y4)-(Y1-Y2)*(X3-X4));
-        double numerp1 = (X1*Y2-Y1*X2);
-        double numerp2 = (X3*Y4-Y3*X4);
-        //return new Point2D.Double(((X1*Y2-Y1*X2)*(X3-X4)-(X1-X2)*(X3*Y4-Y3*X4))/((X1-X2)*(Y3-Y4)-(Y1-Y2)*(X3-X4)),((X1*Y2-Y1*X2)*(Y3-Y4)-(Y1-Y2)*(X3*Y4-Y3*X4))/((X1-X2)*(Y3-Y4)-(Y1-Y2)*(X3-X4)));
-        return new Point2D.Double((numerp1*(X3-X4)-(X1-X2)*numerp2)/denominator,(numerp1*(Y3-Y4)-(Y1-Y2)*numerp2)/denominator); // we only have to do things once
+        double denominator = ((X1 - X2) * (Y3 - Y4) - (Y1 - Y2) * (X3 - X4));
+        if (denominator == 0) return null;
 
+        double numerp1 = (X1 * Y2 - Y1 * X2);
+        double numerp2 = (X3 * Y4 - Y3 * X4);
+
+        return new Point2D.Double(
+                (numerp1 * (X3 - X4) - (X1 - X2) * numerp2) / denominator,
+                (numerp1 * (Y3 - Y4) - (Y1 - Y2) * numerp2) / denominator
+        );
+    }
+
+    public void update(){
+        repaint();
     }
 
     public double toDeg(double fg) {

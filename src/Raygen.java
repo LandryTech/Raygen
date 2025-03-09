@@ -6,28 +6,38 @@ import java.awt.*;
 
 public class Raygen extends JFrame{
     static boolean isRunning;
-    int currentFrame;
-    static RayCasterEngine engine;
     static CollisionManager collisionManager;
     static Player player;
     static UI ui;
     static Settings settings;
     static Map map;
+    static RayCasterEngine rayCasterEngine;
+    static InputHandler inputHandler;
 
     public Raygen(){
         super("Raygen");
 
-        // set the content pane of the frame to the class.
-        setContentPane(new RayCasterEngine());
+        // Initialize player first
+        player = new Player();
+
+        // Set up input handler
+        inputHandler = new InputHandler();
+
+        // Initialize raycasting engine
+        rayCasterEngine = new RayCasterEngine(player);
+        rayCasterEngine.addKeyListener(inputHandler);
+
+        // Set up window properties
+        setContentPane(rayCasterEngine);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int)screenSize.getWidth();
         int height = (int)screenSize.getHeight();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width, height);
-
         setVisible(true);
+        rayCasterEngine.requestFocusInWindow();
 
-        //repaint(0, 0, width, height);
+        gameLoop();
     }
 
     public static void main(String[] args) {
@@ -47,8 +57,18 @@ public class Raygen extends JFrame{
         new Raygen();
     }
 
-    public static void render(){
-
+    public void gameLoop(){
+        new Thread(() -> {
+            while(isRunning){
+                inputHandler.handleInput(player);
+                rayCasterEngine.repaint();
+                try{
+                    Thread.sleep(16);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     public static void stopGame(){

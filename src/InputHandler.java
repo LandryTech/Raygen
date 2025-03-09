@@ -1,49 +1,54 @@
 package src;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.util.Set;
+import java.awt.event.KeyListener;
 
-public class InputHandler{
-    private Set<KeyEvent> keyPressed;
-    private double mouseDeltaX;
-    private double mouseDeltaY;
+public class InputHandler implements KeyListener{
+    private static final double TURN_ANGLE = 1.5;
+    private boolean wKey, aKey, sKey, dKey;
+    private boolean leftKey, rightKey;
 
-    public InputHandler(){
+    public InputHandler(){}
 
+    public void handleInput(Player player) {
+        if (wKey) {
+            player.moveForward();
+        }
+        if (sKey) {
+            player.moveBackward();
+        }
+        if (leftKey) {
+            player.rotateLeft(TURN_ANGLE);
+        }
+        if (rightKey) {
+            player.rotateRight(TURN_ANGLE);
+        }
     }
 
-    public void handleInput(Player player){
-
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_W -> wKey = true;
+            case KeyEvent.VK_A -> aKey = true;
+            case KeyEvent.VK_S -> sKey = true;
+            case KeyEvent.VK_D -> dKey = true;
+            case KeyEvent.VK_LEFT -> leftKey = true;
+            case KeyEvent.VK_RIGHT -> rightKey = true;
+        }
     }
 
-    public void handleMenuNavigation(UI ui){
+    @Override
+    public void keyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_W -> wKey = false;
+            case KeyEvent.VK_A -> aKey = false;
+            case KeyEvent.VK_S -> sKey = false;
+            case KeyEvent.VK_D -> dKey = false;
+            case KeyEvent.VK_LEFT -> leftKey = false;
+            case KeyEvent.VK_RIGHT -> rightKey = false;
+        }
     }
 
-    public void movement(Player player, Set<KeyStroke> key, double mouseDx, double mouseDy){
-    }
-
-    public Set<KeyEvent> getKeyPressed(){
-        return keyPressed;
-    }
-
-    public void setKeyPressed(Set<KeyEvent> keyPressed){
-        this.keyPressed = keyPressed;
-    }
-
-    public double getMouseDeltaX(){
-        return mouseDeltaX;
-    }
-
-    public void setMouseDeltaX(double mouseDeltaX){
-        this.mouseDeltaX = mouseDeltaX;
-    }
-
-    public double getMouseDeltaY(){
-        return mouseDeltaY;
-    }
-
-    public void setMouseDeltaY(double mouseDeltaY){
-        this.mouseDeltaY = mouseDeltaY;
-    }
+    @Override
+    public void keyTyped(KeyEvent e) {}
 }
