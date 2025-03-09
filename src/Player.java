@@ -39,21 +39,17 @@ public class Player {
     }
 
     public void moveForward(){
-        System.out.println("Player moving forward");
         x += Math.cos(toRad(direction)) * MOVE_SPEED;
         y += Math.sin(toRad(direction)) * MOVE_SPEED;
     }
     public void moveBackward(){
-        System.out.println("Player moving backward");
         x -= Math.cos(toRad(direction)) * MOVE_SPEED;
         y -= Math.sin(toRad(direction)) * MOVE_SPEED;
     }
     public void rotateLeft(double angle){
-        System.out.println("Rotating left by " + angle);
         setDirection(direction - angle);
     }
     public void rotateRight(double angle){
-        System.out.println("Rotating right by " + angle);
         setDirection(direction + angle);
     }
 }
