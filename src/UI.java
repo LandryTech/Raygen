@@ -46,7 +46,9 @@ public class UI extends JFrame{
             panel.setBorder(BorderFactory.createTitledBorder("Map " + mapIndex));
 
             // Add a placeholder for the map image
-            JLabel imageLabel = new JLabel("[Image Here]", SwingConstants.CENTER);
+            String imagePath = "maps/map" + mapIndex + ".png";
+            ImageIcon mapImage = new ImageIcon(imagePath);
+            JLabel imageLabel = new JLabel(mapImage, SwingConstants.CENTER);
             panel.add(imageLabel, BorderLayout.CENTER);
 
             // Create a button to select the map
@@ -64,6 +66,8 @@ public class UI extends JFrame{
             if (selectedMap == -1) {
                 // Show an error message if no map is selected
                 JOptionPane.showMessageDialog(frame, "Please select a map before launching!");
+            }else if(selectedMap == 2 || selectedMap == 3){
+                JOptionPane.showMessageDialog(frame, "This map currently isn't available, Please select Map 1");
             } else {
                 // Notify the user and close the menu
                 JOptionPane.showMessageDialog(frame, "Launching Map " + selectedMap + "...");
