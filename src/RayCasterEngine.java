@@ -19,7 +19,7 @@ public class RayCasterEngine extends JPanel {
     private final int maxRenderDistance = 1000; // Maximum distance a ray can travel
     int width = (int)resolution.getWidth();
     int height= (int)resolution.getHeight();
-    public static Line2D.Double[] lev2 = Map.getMapData(); // Map data (walls)
+    public static Line2D.Double[] map = Map.getMapData(); // Map data (walls)
     double[] closestDistances = new double[width]; // Stores the closest intersection distance for each ray
 
     /**
@@ -56,9 +56,24 @@ public class RayCasterEngine extends JPanel {
             double distance = closestDistances[i];
             if(distance != Double.MAX_VALUE){
                 double wallHeight = 2000 / distance;
+                // Creates RGB color based off distance away from wall
+                int colored = (int) clamp(Math.ceil(((wallHeight*6) / (distance))), 0, 215);
+                g.setColor(new Color(0, colored, colored)); // Sets color of wall to certain gradient of color
                 g.draw(new Line2D.Double(i, (double) height / 2 - wallHeight, i, (double) height / 2 + wallHeight));
             }
         }
+    }
+
+    /**
+     * Used to limit the value of a number between certain parameters
+     *
+     * @param value The given value to be clamped
+     * @param minimum Smallest number allowed
+     * @param maximum Largest number allowed
+     * @return number between limits
+     */
+    public static double clamp(double value, double minimum, double maximum){
+        return Math.min(maximum, Math.max(minimum, value));
     }
 
     /**
@@ -110,7 +125,7 @@ public class RayCasterEngine extends JPanel {
         double closestDistance = Double.MAX_VALUE;
 
         // Check for intersections with each wall
-        for(Line2D.Double wall : lev2){
+        for(Line2D.Double wall : map){
             if(ray.intersectsLine(wall)){
                 Point2D.Double intersection = getIntersection(ray, wall);
                 if(intersection != null){
