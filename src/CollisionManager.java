@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * THE COLLISION MANAGER WILL BE IMPLEMENTED
+ * DURING INCREMENT 2!!!!
+ */
 public class CollisionManager{
     private double collisionTolerance;
 
