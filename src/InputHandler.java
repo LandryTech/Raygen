@@ -30,6 +30,12 @@ public class InputHandler implements KeyListener{
         if (sKey) {
             player.moveBackward(); // Move the player backwards
         }
+        if(aKey){
+            player.strafeLeft(); // Move the player left
+        }
+        if(dKey){
+            player.strafeRight(); // Move the player right
+        }
         if (leftKey) {
             player.rotateLeft(TURN_ANGLE); // Rotate the player to the left
         }

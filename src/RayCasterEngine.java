@@ -22,6 +22,7 @@ public class RayCasterEngine extends JPanel {
     public static Line2D.Double[] map = Map.getMapData(); // Map data (walls)
     double[] closestDistances = new double[width]; // Stores the closest intersection distance for each ray
 
+
     /**
      * Constructs a RayCasterEngine with the specified player.
      *
@@ -59,6 +60,7 @@ public class RayCasterEngine extends JPanel {
                 // Creates RGB color based off distance away from wall
                 int colored = (int) clamp(Math.ceil(((wallHeight*6) / (distance))), 0, 215);
                 g.setColor(new Color(0, colored, colored)); // Sets color of wall to certain gradient of color
+
                 g.draw(new Line2D.Double(i, (double) height / 2 - wallHeight, i, (double) height / 2 + wallHeight));
             }
         }

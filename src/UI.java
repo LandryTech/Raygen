@@ -46,7 +46,7 @@ public class UI extends JFrame{
             panel.setBorder(BorderFactory.createTitledBorder("Map " + mapIndex));
 
             // Add a placeholder for the map image
-            String imagePath = "maps/map" + mapIndex + ".png";
+            String imagePath = "resources/map" + mapIndex + ".png";
             ImageIcon mapImage = new ImageIcon(imagePath);
             JLabel imageLabel = new JLabel(mapImage, SwingConstants.CENTER);
             panel.add(imageLabel, BorderLayout.CENTER);

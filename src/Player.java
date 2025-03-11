@@ -95,6 +95,22 @@ public class Player {
     }
 
     /**
+     * Moves the player to the left (strafe left) based on their current direction.
+     */
+    public void strafeLeft() {
+        x += (Math.cos(toRad(direction - 90)) * MOVE_SPEED) / 2;
+        y += (Math.sin(toRad(direction - 90)) * MOVE_SPEED) / 2;
+    }
+
+    /**
+     * Moves the player to the right (strafe right) based on their current direction.
+     */
+    public void strafeRight() {
+        x += (Math.cos(toRad(direction + 90)) * MOVE_SPEED) / 2;
+        y += (Math.sin(toRad(direction + 90)) * MOVE_SPEED) / 2;
+    }
+
+    /**
      * Rotates the player to the left by a specified angle.
      *
      * @param angle The angle to rotate (in degrees)
