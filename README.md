@@ -94,7 +94,7 @@ Distributed under the **GPL License 3.0**. See `LICENSE.txt` for more informatio
 
 Kaden Landry - [Kaden L. LinkedIn](https://www.linkedin.com/in/kaden-landry-661506309/)<br />
 Zachary Beaupre - [Zach B. LinkedIn]()<br />
-Pablo Sanroman - [Pablo S. LinkedIn]()
+Pablo Artero - [Pablo S. LinkedIn](https://www.linkedin.com/in/pablo-artero-sanrom%C3%A1n-8995382bb/)<br />
 
 Project Link: [https://github.com/LandryTech/Raygen](https://github.com/LandryTech/Raygen)
 
