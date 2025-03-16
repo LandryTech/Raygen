@@ -7,10 +7,8 @@ import java.awt.event.KeyListener;
  * The InputHandler class manages user input for the game.
  * It implements the KeyListener interface to handle keyboard events.
  */
-public class InputHandler implements KeyListener{
-    private static final double TURN_ANGLE = 1.5; // Angle (in degrees) by which the player rotates
+public class InputHandler implements KeyListener {
     private boolean wKey, aKey, sKey, dKey; // Flags for movement keys (W, A, S, D)
-    private boolean leftKey, rightKey; // Flags for rotation keys (Left Arrow, Right Arrow)
 
     /**
      * Default constructor for the InputHandler class.
@@ -36,12 +34,6 @@ public class InputHandler implements KeyListener{
         if(dKey){
             player.strafeRight(); // Move the player right
         }
-        if (leftKey) {
-            player.rotateLeft(TURN_ANGLE); // Rotate the player to the left
-        }
-        if (rightKey) {
-            player.rotateRight(TURN_ANGLE); // Rotate the player to the right
-        }
     }
 
     /**
@@ -56,8 +48,7 @@ public class InputHandler implements KeyListener{
             case KeyEvent.VK_A -> aKey = true; // A key pressed
             case KeyEvent.VK_S -> sKey = true; // S key pressed
             case KeyEvent.VK_D -> dKey = true; // D key pressed
-            case KeyEvent.VK_LEFT -> leftKey = true; // Left Arrow key pressed
-            case KeyEvent.VK_RIGHT -> rightKey = true; // Right Arrow key pressed
+            case KeyEvent.VK_ESCAPE -> System.exit(0);
         }
     }
 
@@ -73,8 +64,6 @@ public class InputHandler implements KeyListener{
             case KeyEvent.VK_A -> aKey = false; // A key released
             case KeyEvent.VK_S -> sKey = false; // S key released
             case KeyEvent.VK_D -> dKey = false; // D key released
-            case KeyEvent.VK_LEFT -> leftKey = false; // Left Arrow key released
-            case KeyEvent.VK_RIGHT -> rightKey = false; // Right Arrow key released
         }
     }
 

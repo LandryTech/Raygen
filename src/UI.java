@@ -34,6 +34,7 @@ public class UI extends JFrame{
         frame.setSize(400, 300); // Set menu size
         frame.setResizable(false); // Disable resizing
         frame.setLayout(new BorderLayout()); // Use BorderLayout for the main frame
+        frame.setBackground(Color.BLACK);
 
         // Create a panel for map selection buttons
         JPanel mapPanel = new JPanel();

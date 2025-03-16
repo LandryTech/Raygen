@@ -2,6 +2,8 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -12,8 +14,10 @@ import java.util.List;
  * The RayCasterEngine class is responsible for rendering the game world using raycasting.
  * It extends JPanel to provide a custom drawing surface for the game.
  */
-public class RayCasterEngine extends JPanel {
+public class RayCasterEngine extends JPanel implements MouseMotionListener {
     private Player player; // The player object, using to determine the viewpoint
+    private int centerX, centerY;
+    private Robot robot;
     private double fov = 90; // Field of view in degrees (default is 90 degrees)
     private final Dimension2D resolution = Toolkit.getDefaultToolkit().getScreenSize();
     private final int maxRenderDistance = 1000; // Maximum distance a ray can travel
@@ -30,10 +34,33 @@ public class RayCasterEngine extends JPanel {
      */
     public RayCasterEngine(Player player){
         this.player = player;
+        try{
+            this.robot = new Robot();
+        }catch(AWTException e){
+            e.printStackTrace();
+        }
+        addMouseMotionListener(this);
         setFocusable(true); // Allow the panel to receive focus
         requestFocus(); // Request focus for key events
         repaint(); // Trigger an initial paint of the panel
     }
+
+    @Override
+    public void mouseMoved(MouseEvent e){
+        if(robot == null) return;
+
+        centerX = getWidth() / 2;
+        centerY = getHeight() / 2;
+
+        int currentMouseX = e.getX();
+        int deltaX = currentMouseX - centerX;
+
+        double sensitivity = 0.4;
+        player.setDirection(player.getDirection() + deltaX * sensitivity);
+        robot.mouseMove(centerX + getLocationOnScreen().x, centerY + getLocationOnScreen().y);
+    }
+    @Override
+    public void mouseDragged(MouseEvent e){}
 
     /**
      * Overrides the paint method to render the game world.
@@ -53,13 +80,18 @@ public class RayCasterEngine extends JPanel {
      * @param g The Graphics2D object used for rendering.
      */
     public void drawLevel(Graphics2D g){
+        g.setColor(new Color(0, 20, 220));
+        g.fillRect(0, 0, width, height / 2); // Creates the Sky
+        g.setColor(new Color(0, 120, 20));
+        g.fillRect(0, height / 2, width, height); // Creates the Ground
         for(int i = 0; i < closestDistances.length; i++){
             double distance = closestDistances[i];
             if(distance != Double.MAX_VALUE){
                 double wallHeight = 2000 / distance;
                 // Creates RGB color based off distance away from wall
-                int colored = (int) clamp(Math.ceil(((wallHeight*6) / (distance))), 0, 215);
-                g.setColor(new Color(0, colored, colored)); // Sets color of wall to certain gradient of color
+                int colored = (int) clamp(Math.ceil(((wallHeight*20) / (distance))), 80, 200);
+
+                g.setColor(new Color(colored, colored, colored)); // Sets color of wall to certain gradient of color
 
                 g.draw(new Line2D.Double(i, (double) height / 2 - wallHeight, i, (double) height / 2 + wallHeight));
             }
