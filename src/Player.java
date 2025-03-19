@@ -11,7 +11,7 @@ public class Player {
     private double x = 10; // X-coordinate of the player's position
     private double y = 10; // Y-coordinate of the player's position
     private double direction = 45; // Player's facing direction in degrees
-    private static final double MOVE_SPEED = 0.35; // Speed at which the player moves
+    private static double MOVE_SPEED = 0.35; // Speed at which the player moves
     private CollisionManager collisionManager; // Reference to the collision manager
 
     /**
@@ -196,4 +196,7 @@ public class Player {
     public void rotateRight(double angle) {
         setDirection(direction + angle);
     }
+
+    public double getPlayerSpeed(){return MOVE_SPEED;}
+    public void setPlayerSpeed(double speed){MOVE_SPEED = speed;}
 }

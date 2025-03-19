@@ -3,8 +3,6 @@ package src;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * The main class for the Raygen application. This class initializes the game window,

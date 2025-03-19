@@ -2,6 +2,7 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Dimension2D;
 import java.util.function.Consumer;
 
 /**
@@ -15,6 +16,7 @@ public class UI extends JFrame{
     private JFrame settingsFrame;
     private JSlider fovSlider;
     private JSlider renderDistanceSlider;
+    private JSlider playerSpeedSlider;
 
     /**
      * Constructs a UI object with a callback for map selection.
@@ -89,12 +91,12 @@ public class UI extends JFrame{
         frame.setVisible(true);
     }
 
-    public void createSettingsMenu(RayCasterEngine rayCasterEngine){
+    public void createSettingsMenu(RayCasterEngine rayCasterEngine, Player player){
+        Dimension2D currentResolution = Toolkit.getDefaultToolkit().getScreenSize();
         settingsFrame = new JFrame("Settings");
-        settingsFrame.setSize(600,250);
+        settingsFrame.setSize((int)currentResolution.getWidth()/2,(int) currentResolution.getHeight()/4);
         settingsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        settingsFrame.setLayout(new GridLayout(3,1));
-        settingsFrame.setBackground(new Color(255,0,0));
+        settingsFrame.setLayout(new GridLayout(4,1));
 
         // FOV Slider
         fovSlider = new JSlider(0,360,(int) rayCasterEngine.getFov());
@@ -105,20 +107,29 @@ public class UI extends JFrame{
         settingsFrame.add(new JLabel("FOV (0-360):", SwingConstants.CENTER));
         settingsFrame.add(fovSlider);
 
-        // Max  Render Distance Slider
+        // Render Distance Slider
         renderDistanceSlider = new JSlider(0,250, rayCasterEngine.getMaxRenderDistance());
         renderDistanceSlider.setMajorTickSpacing(25); // Increment of render distance slider
         renderDistanceSlider.setPaintTicks(true);
         renderDistanceSlider.setPaintLabels(true);
         renderDistanceSlider.setSnapToTicks(true);
-        settingsFrame.add(new JLabel("Max Render Distance (0-1000):", SwingConstants.CENTER));
+        settingsFrame.add(new JLabel("Render Distance (0-1000):", SwingConstants.CENTER));
         settingsFrame.add(renderDistanceSlider);
+
+        // Player Movement Speed Slider
+        playerSpeedSlider = new JSlider(0,20, (int) player.getPlayerSpeed());
+        playerSpeedSlider.setMajorTickSpacing(2);
+        playerSpeedSlider.setPaintTicks(true);
+        playerSpeedSlider.setPaintLabels(true);
+        settingsFrame.add(new JLabel("Player Movement Speed (0-20):", SwingConstants.CENTER));
+        settingsFrame.add(playerSpeedSlider);
 
         //Apply Setting Button
         JButton applyButton = new JButton("Apply Settings");
         applyButton.addActionListener(e -> {
             rayCasterEngine.setFOV(fovSlider.getValue());
             rayCasterEngine.setMaxRenderDistance(renderDistanceSlider.getValue());
+            player.setPlayerSpeed(playerSpeedSlider.getValue() * 3.0/20.0);
             settingsFrame.dispose();
             rayCasterEngine.toggleSettingsMenu();
         });
