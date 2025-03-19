@@ -21,10 +21,10 @@
     Raygen is a performant and extensible 2D raycasting engine built in Java, designed for rendering dynamic environments with a classic pseudo-3D perspective. Utilizing the JFrame library for graphical output, Raygen implements an efficient raycasting algorithm to simulate depth perception, making it ideal for games, simulations, and educational projects.
     <br /><br />
     <strong>Key Features:</strong><br />
-    - **Real-Time Rendering** – Uses a raycasting technique to generate a first-person perspective view.<br />
-    - **Smooth Player Movement** – Supports full x-axis motion, and rotational movement via keyboard input.<br />
-    - **Custom Input Handling** – Implements an <code>InputHandler</code> class for responsive user interaction.<br />
-    - **Scalable and Modular** – Easily extendable for new gameplay mechanics, textures, and enhancements.<br />
+    <strong>Real-Time Rendering</strong> – Uses a raycasting technique to generate a first-person perspective view.<br />
+    <strong>Smooth Player Movement</strong> – Supports full x-axis motion, and rotational movement via keyboard input.<br />
+    <strong>Custom Input Handling</strong> – Implements an <code>InputHandler</code> class for responsive user interaction.<br />
+    <strong>Scalable and Modular</strong> – Easily extendable for new gameplay mechanics, textures, and enhancements.<br />
     <br />
     Whether you're exploring the fundamentals of computer graphics or developing a retro-style game, Raygen provides a solid foundation for 2D raycasting in Java.
     <br />
