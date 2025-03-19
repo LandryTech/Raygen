@@ -29,7 +29,6 @@ public class Raygen extends JFrame{
 
         // Initialize player first
         player = new Player();
-
         // Initialize the collision manager with the map data
         collisionManager = new CollisionManager(Map.getMapData());
 
