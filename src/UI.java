@@ -12,6 +12,9 @@ public class UI extends JFrame{
     private int selectedMap; // The currently selected map index
     private Consumer<Integer> onMapSelected; // Callback to notify when a map is selected
     private JButton[] mapButtons = new JButton[3]; // Buttons for selecting maps
+    private JFrame settingsFrame;
+    private JSlider fovSlider;
+    private JSlider renderDistanceSlider;
 
     /**
      * Constructs a UI object with a callback for map selection.
@@ -86,6 +89,44 @@ public class UI extends JFrame{
         frame.setVisible(true);
     }
 
+    public void createSettingsMenu(RayCasterEngine rayCasterEngine){
+        settingsFrame = new JFrame("Settings");
+        settingsFrame.setSize(600,250);
+        settingsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        settingsFrame.setLayout(new GridLayout(3,1));
+        settingsFrame.setBackground(new Color(255,0,0));
+
+        // FOV Slider
+        fovSlider = new JSlider(0,360,(int) rayCasterEngine.getFov());
+        fovSlider.setMajorTickSpacing(45); // Increment of FOV slider
+        fovSlider.setPaintTicks(true);
+        fovSlider.setPaintLabels(true);
+        fovSlider.setSnapToTicks(true);
+        settingsFrame.add(new JLabel("FOV (0-360):", SwingConstants.CENTER));
+        settingsFrame.add(fovSlider);
+
+        // Max  Render Distance Slider
+        renderDistanceSlider = new JSlider(0,250, rayCasterEngine.getMaxRenderDistance());
+        renderDistanceSlider.setMajorTickSpacing(25); // Increment of render distance slider
+        renderDistanceSlider.setPaintTicks(true);
+        renderDistanceSlider.setPaintLabels(true);
+        renderDistanceSlider.setSnapToTicks(true);
+        settingsFrame.add(new JLabel("Max Render Distance (0-1000):", SwingConstants.CENTER));
+        settingsFrame.add(renderDistanceSlider);
+
+        //Apply Setting Button
+        JButton applyButton = new JButton("Apply Settings");
+        applyButton.addActionListener(e -> {
+            rayCasterEngine.setFOV(fovSlider.getValue());
+            rayCasterEngine.setMaxRenderDistance(renderDistanceSlider.getValue());
+            settingsFrame.dispose();
+            rayCasterEngine.toggleSettingsMenu();
+        });
+        settingsFrame.add(applyButton);
+        settingsFrame.setLocationRelativeTo(null);
+        settingsFrame.setVisible(true);
+    }
+
     /**
      * Updates the selected map and highlights the corresponding button.
      *
@@ -97,17 +138,5 @@ public class UI extends JFrame{
             button.setBackground(Color.LIGHT_GRAY); // Reset all buttons to default color
         }
         mapButtons[mapIndex - 1].setBackground(Color.GREEN); // Highlight the selected button
-    }
-
-    public void renderHUD(Player player){
-        // TODO: Implement HUD rendering
-    }
-
-    public void updateSettings(Settings settings){
-        // TODO: Implement settings update logic
-    }
-
-    public void displayMessage(String message){
-        // TODO: Implement message display logic
     }
 }

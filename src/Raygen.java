@@ -3,6 +3,8 @@ package src;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * The main class for the Raygen application. This class initializes the game window,
@@ -46,10 +48,8 @@ public class Raygen extends JFrame{
         // Set up window properties
         setContentPane(rayCasterEngine); // Set the raycasting engine as the content pane
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int)screenSize.getWidth();
-        int height = (int)screenSize.getHeight();
+        setSize((int) screenSize.getWidth(), (int) screenSize.getHeight()); // Sets to full screen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close application on window close
-        setSize(width, height); // Set window size to full screen
         setVisible(true); // Makes window visible
         rayCasterEngine.requestFocusInWindow();
 

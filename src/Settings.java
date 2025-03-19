@@ -13,6 +13,7 @@ public class Settings{
     private double resolutionWidth; // Width of the game resolution
     private double resolutionHeight; // Height of the game resolution
     private double fov; // Field of view in degrees
+    private int maxRenderDistance;
 
     /**
      * Default constructor that initializes settings with default values.
@@ -29,11 +30,12 @@ public class Settings{
      * @param resolutionHeight The height of the game resolution
      * @param fov The field of view in degrees
      */
-    public Settings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov) {
+    public Settings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov, int maxRenderDistance) {
         this.mouseSensitivity = mouseSensitivity;
         this.resolutionWidth = resolutionWidth;
         this.resolutionHeight = resolutionHeight;
         this.fov = fov;
+        this.maxRenderDistance = maxRenderDistance;
     }
 
     /**
@@ -45,6 +47,7 @@ public class Settings{
         this.resolutionHeight = screenSize.getHeight();
         this.mouseSensitivity = 1.0; // Default sensitivity
         this.fov = 90.0; // Default field of view
+        this.maxRenderDistance = 1000;
     }
 
     /**
@@ -55,12 +58,18 @@ public class Settings{
      * @param resolutionHeight The new resolution height
      * @param fov The new field of view
      */
-    public void applySettings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov){
+    public void applySettings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov, int maxRenderDistance){
         this.mouseSensitivity = mouseSensitivity;
         this.resolutionWidth = resolutionWidth;
         this.resolutionHeight = resolutionHeight;
         this.fov = fov;
+        this.maxRenderDistance = maxRenderDistance;
     }
+
+    public double getFov(){return fov;}
+    public void setFov(double fov){this.fov = fov;}
+    public int getMaxRenderDistance(){return maxRenderDistance;}
+    public void setMaxRenderDistance(int maxRenderDistance){this.maxRenderDistance = maxRenderDistance;}
 
     /**
      * Saves the current settings to a file.
@@ -91,7 +100,7 @@ public class Settings{
             this.mouseSensitivity = Double.parseDouble(properties.getProperty("mouseSensitivity"));
             this.resolutionWidth = Double.parseDouble(properties.getProperty("resolutionWidth"));
             this.resolutionHeight = Double.parseDouble(properties.getProperty("resolutionHeight"));
-            this.fov = Double.parseDouble(properties.getProperty("fov"));
+            this.fov = Integer.parseInt(properties.getProperty("fov"));
         } catch (IOException e) {
             e.printStackTrace();
         }

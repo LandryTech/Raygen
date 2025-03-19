@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
  * the player and walls in the game. It prevents the player from walking through walls.
  */
 public class CollisionManager {
-    private double collisionTolerance; // Minimum distance allowed between player and walls
+    private double collisionTolerance = 0.15; // Minimum distance allowed between player and walls
     private Line2D.Double[] mapData; // Reference to map walls
 
     /**
@@ -18,7 +18,6 @@ public class CollisionManager {
      */
     public CollisionManager(Line2D.Double[] mapData) {
         this.mapData = mapData;
-        this.collisionTolerance = 1.0; // Default collision tolerance
     }
 
     /**
@@ -26,7 +25,6 @@ public class CollisionManager {
      */
     public CollisionManager() {
         this(Map.getMapData());
-        this.collisionTolerance = 1.0; // Default collision tolerance
     }
 
     /**

@@ -2,6 +2,8 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Dimension2D;
@@ -15,12 +17,13 @@ import java.util.List;
  * It extends JPanel to provide a custom drawing surface for the game.
  */
 public class RayCasterEngine extends JPanel implements MouseMotionListener {
-    private Player player; // The player object, using to determine the viewpoint
+    private final Player player; // The player object, using to determine the viewpoint
     private int centerX, centerY;
     private Robot robot;
-    private double fov = 90; // Field of view in degrees (default is 90 degrees)
+    private double fov; // Field of view in degrees (default is 90 degrees)
     private final Dimension2D resolution = Toolkit.getDefaultToolkit().getScreenSize();
-    private final int maxRenderDistance = 1000; // Maximum distance a ray can travel
+    private int maxRenderDistance; // Maximum distance a ray can travel
+    private boolean settingsMenuOpen = false; // Tracks if the settings menu is open
     int width = (int)resolution.getWidth();
     int height= (int)resolution.getHeight();
     public static Line2D.Double[] map = Map.getMapData(); // Map data (walls)
@@ -34,6 +37,8 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
      */
     public RayCasterEngine(Player player){
         this.player = player;
+        this.fov = 90.0; // Default FOV
+        this.maxRenderDistance = 250; // Default max render distance
         try{
             this.robot = new Robot();
         }catch(AWTException e){
@@ -41,13 +46,51 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
         }
         addMouseMotionListener(this);
         setFocusable(true); // Allow the panel to receive focus
-        requestFocus(); // Request focus for key events
+        requestFocusInWindow(); // Request focus for key events
         repaint(); // Trigger an initial paint of the panel
+
+        setupKeyBindings();
     }
 
+    /**
+     *
+     */
+    private void setupKeyBindings(){
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = getActionMap();
+
+        KeyStroke spaceKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0);
+        inputMap.put(spaceKeyStroke, "toggleSettingsMenu");
+        actionMap.put("toggleSettingsMenu", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toggleSettingsMenu();
+                if(settingsMenuOpen){
+                    UI ui = Raygen.ui;
+                    ui.createSettingsMenu(RayCasterEngine.this);
+                }
+            }
+        });
+    }
+
+    /**
+     *
+     */
+    public void toggleSettingsMenu(){
+        settingsMenuOpen = !settingsMenuOpen;
+        if(settingsMenuOpen){
+            robot.mouseMove(centerX + getLocationOnScreen().x, centerY + getLocationOnScreen().y);
+        }
+    }
+
+    /**
+     *
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void mouseMoved(MouseEvent e){
-        if(robot == null) return;
+        if(robot == null || settingsMenuOpen) return;
 
         centerX = getWidth() / 2;
         centerY = getHeight() / 2;
@@ -228,5 +271,19 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
      */
     public double toRad(double fg) {
         return Math.toRadians(fg);
+    }
+
+    public void setFOV(double fov){this.fov = fov;}
+    public double getFov(){return fov;}
+
+    public void setMaxRenderDistance(int maxRenderDistance){
+        this.maxRenderDistance = maxRenderDistance;
+    }
+    public int getMaxRenderDistance(){
+        return maxRenderDistance;
+    }
+
+    public boolean isSettingsMenuOpen(){
+        return settingsMenuOpen;
     }
 }
