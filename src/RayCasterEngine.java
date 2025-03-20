@@ -67,7 +67,7 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
                 toggleSettingsMenu();
                 if(settingsMenuOpen){
                     UI ui = Raygen.ui;
-                    ui.createSettingsMenu(RayCasterEngine.this, player);
+                    ui.createSettingsMenu(RayCasterEngine.this, player, Raygen.collisionManager);
                 }
             }
         });

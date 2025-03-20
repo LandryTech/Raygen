@@ -17,7 +17,7 @@ public class Map{
     private static ArrayList<Double> y2 = new ArrayList<Double>(); // Ending Y coordinates
 
     private int currentMap; // Index of the currently loaded map
-    private String[] mapNames = {"maps/default.svg","",""}; // File paths for available maps
+    private String[] mapNames = {"maps/default.svg","maps/10x10_Map.svg","maps/15x10_Map.svg"}; // File paths for available maps
     public static Line2D.Double[] mapData; // Array of Lines to represent the map
     private int[][] spawnPoints; // Spawn points for the player (not currently used)
 

@@ -17,6 +17,7 @@ public class UI extends JFrame{
     private JSlider fovSlider;
     private JSlider renderDistanceSlider;
     private JSlider playerSpeedSlider;
+    private JSlider colTolSlider;
 
     /**
      * Constructs a UI object with a callback for map selection.
@@ -34,16 +35,17 @@ public class UI extends JFrame{
      * @param menuName The title of the menu window.
      */
     public void createAndShowGUI(String menuName) {
+        Dimension2D GUISize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame frame = new JFrame(menuName); // Creates main window
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the application on window close
-        frame.setSize(400, 300); // Set menu size
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close the application on window close
+        frame.setSize((int)GUISize.getWidth()/3, (int)GUISize.getHeight()/2); // Set menu size
         frame.setResizable(false); // Disable resizing
         frame.setLayout(new BorderLayout()); // Use BorderLayout for the main frame
         frame.setBackground(Color.BLACK);
 
         // Create a panel for map selection buttons
         JPanel mapPanel = new JPanel();
-        mapPanel.setLayout(new GridLayout(1, 3, 10, 10));
+        mapPanel.setLayout(new GridLayout(2, 2, 10, 10));
 
         // Create buttons for each map
         for (int i = 0; i < 3; i++) {
@@ -72,12 +74,11 @@ public class UI extends JFrame{
             if (selectedMap == -1) {
                 // Show an error message if no map is selected
                 JOptionPane.showMessageDialog(frame, "Please select a map before launching!");
-            }else if(selectedMap == 2 || selectedMap == 3){
-                JOptionPane.showMessageDialog(frame, "This map currently isn't available, Please select Map 1");
-            } else {
+            }else {
                 // Notify the user and close the menu
                 JOptionPane.showMessageDialog(frame, "Launching Map " + selectedMap + "...");
                 frame.dispose(); // Close the menu window
+
                 onMapSelected.accept(selectedMap); // Notify the callback with the selected map
             }
         });
@@ -91,12 +92,12 @@ public class UI extends JFrame{
         frame.setVisible(true);
     }
 
-    public void createSettingsMenu(RayCasterEngine rayCasterEngine, Player player){
-        Dimension2D currentResolution = Toolkit.getDefaultToolkit().getScreenSize();
+    public void createSettingsMenu(RayCasterEngine rayCasterEngine, Player player, CollisionManager cm){
+        Dimension2D cRes = Toolkit.getDefaultToolkit().getScreenSize(); // Current Resolution
         settingsFrame = new JFrame("Settings");
-        settingsFrame.setSize((int)currentResolution.getWidth()/2,(int) currentResolution.getHeight()/4);
+        settingsFrame.setSize((int)cRes.getWidth()/2,(int) cRes.getHeight()/4);
         settingsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        settingsFrame.setLayout(new GridLayout(4,1));
+        settingsFrame.setLayout(new GridLayout(3,2));
 
         // FOV Slider
         fovSlider = new JSlider(0,360,(int) rayCasterEngine.getFov());
@@ -113,16 +114,24 @@ public class UI extends JFrame{
         renderDistanceSlider.setPaintTicks(true);
         renderDistanceSlider.setPaintLabels(true);
         renderDistanceSlider.setSnapToTicks(true);
-        settingsFrame.add(new JLabel("Render Distance (0-1000):", SwingConstants.CENTER));
+        settingsFrame.add(new JLabel("Render Distance (0-250):", SwingConstants.CENTER));
         settingsFrame.add(renderDistanceSlider);
 
         // Player Movement Speed Slider
-        playerSpeedSlider = new JSlider(0,20, (int) player.getPlayerSpeed());
-        playerSpeedSlider.setMajorTickSpacing(2);
+        playerSpeedSlider = new JSlider(0,100, (int) player.getPlayerSpeed()+1);
+        playerSpeedSlider.setMajorTickSpacing(20);
         playerSpeedSlider.setPaintTicks(true);
         playerSpeedSlider.setPaintLabels(true);
-        settingsFrame.add(new JLabel("Player Movement Speed (0-20):", SwingConstants.CENTER));
+        settingsFrame.add(new JLabel("Player Movement Speed (0 - 100):", SwingConstants.CENTER));
         settingsFrame.add(playerSpeedSlider);
+
+        // Collision Tolerance Slider
+        colTolSlider = new JSlider(0,100, (int) cm.getCollisionTolerance() * 100);
+        colTolSlider.setMajorTickSpacing(10);
+        colTolSlider.setPaintTicks(true);
+        colTolSlider.setPaintLabels(true);
+        settingsFrame.add(new JLabel("Collision Tolerance (0.0 - 1.0):", SwingConstants.CENTER));
+        settingsFrame.add(colTolSlider);
 
         //Apply Setting Button
         JButton applyButton = new JButton("Apply Settings");
@@ -130,10 +139,21 @@ public class UI extends JFrame{
             rayCasterEngine.setFOV(fovSlider.getValue());
             rayCasterEngine.setMaxRenderDistance(renderDistanceSlider.getValue());
             player.setPlayerSpeed(playerSpeedSlider.getValue() * 3.0/20.0);
+            double colTolValue = colTolSlider.getValue() /100.0;
+            cm.setCollisionTolerance(colTolValue);
             settingsFrame.dispose();
             rayCasterEngine.toggleSettingsMenu();
         });
+
+        // Close Setting Button
+        JButton closeButton = new JButton("Close Settings (Don't Save)");
+        closeButton.addActionListener(e -> {
+            settingsFrame.dispose();
+            rayCasterEngine.toggleSettingsMenu();
+        });
+
         settingsFrame.add(applyButton);
+        settingsFrame.add(closeButton);
         settingsFrame.setLocationRelativeTo(null);
         settingsFrame.setVisible(true);
     }

@@ -20,6 +20,7 @@ public class Raygen extends JFrame{
     static RayCasterEngine rayCasterEngine; // Handles rendering and raycasting logic
     static InputHandler inputHandler; // Manages user input
 
+
     /**
      * Constructs the Raygen game window and initializes game components.
      * Sets up the player, input handler, raycasting engine, and game loop.
