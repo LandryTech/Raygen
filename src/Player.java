@@ -197,6 +197,15 @@ public class Player {
         setDirection(direction + angle);
     }
 
+    /**
+     * @return Player Movement Speed
+     */
     public double getPlayerSpeed(){return MOVE_SPEED;}
+
+    /**
+     * Sets the players speed by to the specified speed
+     *
+     * @param speed
+     */
     public void setPlayerSpeed(double speed){MOVE_SPEED = speed;}
 }

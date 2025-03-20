@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,8 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
     }
 
     /**
-     *
+     * Configures key bindings for the game, allowing interaction through keyboard input.
+     * Specifically, binds the spacebar to toggle the settings menu.
      */
     private void setupKeyBindings(){
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -74,17 +76,22 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
     }
 
     /**
-     *
+     * Toggles the settings menu on or off. If opened, it recenters the mouse cursor.
      */
     public void toggleSettingsMenu(){
         settingsMenuOpen = !settingsMenuOpen;
         if(settingsMenuOpen){
             robot.mouseMove(centerX + getLocationOnScreen().x, centerY + getLocationOnScreen().y);
+            showCursor();
+        } else {
+            hideCursor();
         }
     }
 
+
     /**
-     *
+     * Handles mouse movement events to update the player's direction based on teh cursor position.
+     * If the settings menu is open, mouse movement is ignored.
      *
      * @param e the event to be processed
      */
@@ -273,17 +280,29 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
         return Math.toRadians(fg);
     }
 
+    /**
+     * Used to hide the cursor while in the game.
+     */
+    private void hideCursor() {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        BufferedImage cursorImg = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Cursor blankCursor = toolkit.createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
+        setCursor(blankCursor);
+    }
+
+    /**
+     * Shows the cursor while the settings menu is open.
+     */
+    private void showCursor() {
+        setCursor(Cursor.getDefaultCursor());
+    }
+
     public void setFOV(double fov){this.fov = fov;}
     public double getFov(){return fov;}
-
     public void setMaxRenderDistance(int maxRenderDistance){
         this.maxRenderDistance = maxRenderDistance;
     }
     public int getMaxRenderDistance(){
         return maxRenderDistance;
-    }
-
-    public boolean isSettingsMenuOpen(){
-        return settingsMenuOpen;
     }
 }

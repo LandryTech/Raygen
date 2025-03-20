@@ -22,18 +22,10 @@ public class InputHandler implements KeyListener {
      * @param player The player object to control.
      */
     public void handleInput(Player player) {
-        if (wKey) {
-            player.moveForward(); // Move the player forward
-        }
-        if (sKey) {
-            player.moveBackward(); // Move the player backwards
-        }
-        if(aKey){
-            player.strafeLeft(); // Move the player left
-        }
-        if(dKey){
-            player.strafeRight(); // Move the player right
-        }
+        if (wKey) player.moveForward(); // Move the player forward
+        if (sKey) player.moveBackward(); // Move the player backwards
+        if(aKey) player.strafeLeft(); // Move the player left
+        if(dKey) player.strafeRight(); // Move the player right
     }
 
     /**
