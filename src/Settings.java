@@ -100,7 +100,7 @@ public class Settings{
             this.mouseSensitivity = Double.parseDouble(properties.getProperty("mouseSensitivity"));
             this.resolutionWidth = Double.parseDouble(properties.getProperty("resolutionWidth"));
             this.resolutionHeight = Double.parseDouble(properties.getProperty("resolutionHeight"));
-            this.fov = Integer.parseInt(properties.getProperty("fov"));
+            this.fov = Double.parseDouble(properties.getProperty("fov"));
         } catch (IOException e) {
             e.printStackTrace();
         }

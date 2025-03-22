@@ -217,19 +217,20 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
                 Point2D.Double intersection = getIntersection(ray, wall);
                 if(intersection != null){
                     double distance = playerPosition.distance(intersection);
-                    if(distance < closestDistance){
-                        closestDistance = distance;
+
+                    // Cosine fisheye correction (Zach)
+                    double angleDifference = toRad(angle - player.getDirection());
+                    double correctedDistance = distance * Math.cos(angleDifference);
+
+                    if(correctedDistance < closestDistance){
+                        closestDistance = correctedDistance;
                         closestIntersection = intersection;
                     }
                 }
             }
         }
-//cosine correction
-
-    closestDistances[rayIndex] = closestDistance * Math.cos(toRad((player.getDirection() - angle))); // Store the closest distance for this ray
-
-    return closestIntersection;
-
+        closestDistances[rayIndex] = closestDistance; // Store the closest distance for this ray
+        return closestIntersection;
     }
 
     /**
