@@ -14,6 +14,7 @@ public class Settings{
     private double resolutionHeight; // Height of the game resolution
     private double fov; // Field of view in degrees
     private int maxRenderDistance;
+    private double playerSpeed;
 
     /**
      * Default constructor that initializes settings with default values.
@@ -30,12 +31,13 @@ public class Settings{
      * @param resolutionHeight The height of the game resolution
      * @param fov The field of view in degrees
      */
-    public Settings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov, int maxRenderDistance) {
+    public Settings(double mouseSensitivity, double resolutionWidth, double resolutionHeight, double fov, int maxRenderDistance, double playerSpeed) {
         this.mouseSensitivity = mouseSensitivity;
         this.resolutionWidth = resolutionWidth;
         this.resolutionHeight = resolutionHeight;
         this.fov = fov;
         this.maxRenderDistance = maxRenderDistance;
+        this.playerSpeed = playerSpeed;
     }
 
     /**
@@ -48,6 +50,7 @@ public class Settings{
         this.mouseSensitivity = 1.0; // Default sensitivity
         this.fov = 90.0; // Default field of view
         this.maxRenderDistance = 1000;
+        this.playerSpeed = 0.35;
     }
 
     /**
@@ -58,12 +61,13 @@ public class Settings{
      * @param resolutionHeight The new resolution height
      * @param fov The new field of view
      */
-    public void applySettings(double mouseSensitivity, int resolutionWidth, int resolutionHeight, double fov, int maxRenderDistance){
+    public void applySettings(double mouseSensitivity, double resolutionWidth, double resolutionHeight, double fov, int maxRenderDistance, double playerSpeed){
         this.mouseSensitivity = mouseSensitivity;
         this.resolutionWidth = resolutionWidth;
         this.resolutionHeight = resolutionHeight;
         this.fov = fov;
         this.maxRenderDistance = maxRenderDistance;
+        this.playerSpeed = playerSpeed;
     }
 
     public double getFov(){return fov;}
@@ -73,11 +77,9 @@ public class Settings{
 
     /**
      * Saves the current settings to a file.
-     *
-     * @param filename The name of the file to save the settings to.
      */
-    public void saveToFile(String filename){
-        try (FileWriter writer = new FileWriter(filename)) {
+    public void saveToFile(){
+        try (FileWriter writer = new FileWriter("resources/settings.json")) {
             writer.write("mouseSensitivity=" + mouseSensitivity + "\n");
             writer.write("resolutionWidth=" + resolutionWidth + "\n");
             writer.write("resolutionHeight=" + resolutionHeight + "\n");
@@ -89,11 +91,9 @@ public class Settings{
 
     /**
      * Loads settings from a file.
-     *
-     * @param filename The name of the file to load the settings from.
      */
-    public void loadFromFile(String filename){
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+    public void loadFromFile(){
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources/settings.json"))) {
             Properties properties = new Properties();
             properties.load(reader);
 

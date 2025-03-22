@@ -92,7 +92,7 @@ public class UI extends JFrame{
         frame.setVisible(true);
     }
 
-    public void createSettingsMenu(RayCasterEngine rayCasterEngine, Player player, CollisionManager cm){
+    public void createSettingsMenu(RayCasterEngine rayCasterEngine, Player player, CollisionManager cm, Settings settings){
         Dimension2D cRes = Toolkit.getDefaultToolkit().getScreenSize(); // Current Resolution
         settingsFrame = new JFrame("Settings");
         settingsFrame.setSize((int)cRes.getWidth()/2,(int) cRes.getHeight()/4);
@@ -110,7 +110,7 @@ public class UI extends JFrame{
 
         // Render Distance Slider
         renderDistanceSlider = new JSlider(0,250, rayCasterEngine.getMaxRenderDistance());
-        renderDistanceSlider.setMajorTickSpacing(25); // Increment of render distance slider
+        renderDistanceSlider.setMajorTickSpacing(50); // Increment of render distance slider
         renderDistanceSlider.setPaintTicks(true);
         renderDistanceSlider.setPaintLabels(true);
         renderDistanceSlider.setSnapToTicks(true);
@@ -141,6 +141,10 @@ public class UI extends JFrame{
             player.setPlayerSpeed(playerSpeedSlider.getValue() * 3.0/20.0);
             double colTolValue = colTolSlider.getValue() /100.0;
             cm.setCollisionTolerance(colTolValue);
+            settings.applySettings(
+                    0.4,cRes.getWidth(),
+                    cRes.getHeight(), fovSlider.getValue(),
+                    renderDistanceSlider.getValue(), playerSpeedSlider.getValue());
             settingsFrame.dispose();
             rayCasterEngine.toggleSettingsMenu();
         });
@@ -152,8 +156,15 @@ public class UI extends JFrame{
             rayCasterEngine.toggleSettingsMenu();
         });
 
-        settingsFrame.add(applyButton);
-        settingsFrame.add(closeButton);
+        // Exit Game Button
+        JButton closeGame = new JButton("Exit Game");
+        closeGame.addActionListener(e -> {
+            Raygen.stopGame();
+        });
+
+        settingsFrame.add(applyButton, CENTER_ALIGNMENT);
+        settingsFrame.add(closeButton, CENTER_ALIGNMENT);
+        settingsFrame.add(closeGame, CENTER_ALIGNMENT);
         settingsFrame.setLocationRelativeTo(null);
         settingsFrame.setVisible(true);
     }

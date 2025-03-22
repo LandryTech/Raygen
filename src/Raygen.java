@@ -43,6 +43,8 @@ public class Raygen extends JFrame{
         rayCasterEngine = new RayCasterEngine(player);
         rayCasterEngine.addKeyListener(inputHandler); // Registers key events through inputHandler
 
+        settings = new Settings();
+
         // Set up window properties
         setContentPane(rayCasterEngine); // Set the raycasting engine as the content pane
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -82,6 +84,7 @@ public class Raygen extends JFrame{
         map = new Map(selectedMap); // Initialize the game map
         System.out.println("Game has started");
         new Raygen(); // Create the game window
+        settings.loadFromFile();
     }
 
     /**
@@ -105,6 +108,7 @@ public class Raygen extends JFrame{
      * Stops the game and exits the application.
      */
     public static void stopGame(){
+        settings.saveToFile();
         isRunning = false;
         System.exit(0);
     }

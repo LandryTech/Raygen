@@ -40,7 +40,7 @@ public class InputHandler implements KeyListener {
             case KeyEvent.VK_A -> aKey = true; // A key pressed
             case KeyEvent.VK_S -> sKey = true; // S key pressed
             case KeyEvent.VK_D -> dKey = true; // D key pressed
-            case KeyEvent.VK_ESCAPE -> System.exit(0);
+            case KeyEvent.VK_ESCAPE -> Raygen.stopGame();
         }
     }
 

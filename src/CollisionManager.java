@@ -36,7 +36,6 @@ public class CollisionManager {
      */
     public boolean checkCollision(Point2D.Double currentPosition, Point2D.Double targetPosition) {
         if (mapData == null) return false;
-        System.out.println(collisionTolerance);
         // Create a line representing the player's movement
         Line2D.Double movementLine = new Line2D.Double(currentPosition, targetPosition);
 
