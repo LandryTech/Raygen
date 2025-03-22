@@ -146,6 +146,9 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
                 g.draw(new Line2D.Double(i, (double) height / 2 - wallHeight, i, (double) height / 2 + wallHeight));
             }
         }
+        g.scale(2,2);
+        g.setColor(Color.BLACK);
+        g.drawString(String.format("Direction: %f",player.getDirection()), 50,50);
     }
 
     /**
@@ -221,8 +224,12 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
                 }
             }
         }
-        closestDistances[rayIndex] = closestDistance; // Store the closest distance for this ray
-        return closestIntersection;
+//cosine correction
+
+    closestDistances[rayIndex] = closestDistance * Math.cos(toRad((player.getDirection() - angle))); // Store the closest distance for this ray
+
+    return closestIntersection;
+
     }
 
     /**
