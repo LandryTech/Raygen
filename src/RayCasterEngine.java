@@ -22,6 +22,7 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
     private int centerX, centerY;
     private Robot robot;
     private double fov; // Field of view in degrees (default is 90 degrees)
+    private double mouseSens = 0.4;
     private final Dimension2D resolution = Toolkit.getDefaultToolkit().getScreenSize();
     private int maxRenderDistance; // Maximum distance a ray can travel
     private boolean settingsMenuOpen = false; // Tracks if the settings menu is open
@@ -105,8 +106,7 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
         int currentMouseX = e.getX();
         int deltaX = currentMouseX - centerX;
 
-        double sensitivity = 0.4;
-        player.setDirection(player.getDirection() + deltaX * sensitivity);
+        player.setDirection(player.getDirection() + deltaX * mouseSens);
         robot.mouseMove(centerX + getLocationOnScreen().x, centerY + getLocationOnScreen().y);
     }
     @Override
@@ -218,12 +218,8 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
                 if(intersection != null){
                     double distance = playerPosition.distance(intersection);
 
-                    // Cosine fisheye correction (Zach)
-                    double angleDifference = toRad(angle - player.getDirection());
-                    double correctedDistance = distance * Math.cos(angleDifference);
-
-                    if(correctedDistance < closestDistance){
-                        closestDistance = correctedDistance;
+                    if(distance < closestDistance){
+                        closestDistance = distance;
                         closestIntersection = intersection;
                     }
                 }
@@ -305,6 +301,8 @@ public class RayCasterEngine extends JPanel implements MouseMotionListener {
         setCursor(Cursor.getDefaultCursor());
     }
 
+    public double getMouseSens(){return mouseSens;}
+    public void setMouseSens(double mouseSens){this.mouseSens = mouseSens;}
     public void setFOV(double fov){this.fov = fov;}
     public double getFov(){return fov;}
     public void setMaxRenderDistance(int maxRenderDistance){

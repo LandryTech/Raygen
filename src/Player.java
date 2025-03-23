@@ -11,7 +11,7 @@ public class Player {
     private double x = 10; // X-coordinate of the player's position
     private double y = 10; // Y-coordinate of the player's position
     private double direction = 45; // Player's facing direction in degrees
-    private static double MOVE_SPEED = 0.35; // Speed at which the player moves
+    private static double MOVE_SPEED = 1; // Speed at which the player moves
     private CollisionManager collisionManager; // Reference to the collision manager
 
     /**

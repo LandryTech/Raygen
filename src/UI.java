@@ -97,7 +97,7 @@ public class UI extends JFrame{
         settingsFrame = new JFrame("Settings");
         settingsFrame.setSize((int)cRes.getWidth()/2,(int) cRes.getHeight()/4);
         settingsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        settingsFrame.setLayout(new GridLayout(3,2));
+        settingsFrame.setLayout(new GridLayout(4,2));
 
         // FOV Slider
         fovSlider = new JSlider(0,360,(int) rayCasterEngine.getFov());
@@ -118,8 +118,8 @@ public class UI extends JFrame{
         settingsFrame.add(renderDistanceSlider);
 
         // Player Movement Speed Slider
-        playerSpeedSlider = new JSlider(0,100, (int) player.getPlayerSpeed()+1);
-        playerSpeedSlider.setMajorTickSpacing(20);
+        playerSpeedSlider = new JSlider(0,4, (int) player.getPlayerSpeed()+1);
+        playerSpeedSlider.setMajorTickSpacing(1);
         playerSpeedSlider.setPaintTicks(true);
         playerSpeedSlider.setPaintLabels(true);
         settingsFrame.add(new JLabel("Player Movement Speed (0 - 100):", SwingConstants.CENTER));
@@ -133,16 +133,27 @@ public class UI extends JFrame{
         settingsFrame.add(new JLabel("Collision Tolerance (0.0 - 1.0):", SwingConstants.CENTER));
         settingsFrame.add(colTolSlider);
 
+        // Mouse Sensitivity Slider
+        JSlider mouseSensSlider = new JSlider(0,100, (int) (rayCasterEngine.getMouseSens() * 100));
+        mouseSensSlider.setMajorTickSpacing(10);
+        mouseSensSlider.setPaintTicks(true);
+        mouseSensSlider.setPaintLabels(true);
+        settingsFrame.add(new JLabel("Mouse Sensitivity (0.0 - 1.0):", SwingConstants.CENTER));
+        settingsFrame.add(mouseSensSlider);
+
+
         //Apply Setting Button
         JButton applyButton = new JButton("Apply Settings");
         applyButton.addActionListener(e -> {
             rayCasterEngine.setFOV(fovSlider.getValue());
             rayCasterEngine.setMaxRenderDistance(renderDistanceSlider.getValue());
-            player.setPlayerSpeed(playerSpeedSlider.getValue() * 3.0/20.0);
+            player.setPlayerSpeed(playerSpeedSlider.getValue() * 0.5);
             double colTolValue = colTolSlider.getValue() /100.0;
             cm.setCollisionTolerance(colTolValue);
+            double mouseSensValue = mouseSensSlider.getValue() / 100.0;
+            rayCasterEngine.setMouseSens(mouseSensValue);
             settings.applySettings(
-                    0.4,cRes.getWidth(),
+                    mouseSensValue,cRes.getWidth(),
                     cRes.getHeight(), fovSlider.getValue(),
                     renderDistanceSlider.getValue(), playerSpeedSlider.getValue());
             settingsFrame.dispose();
