@@ -27,6 +27,7 @@
     <strong>Scalable and Modular</strong> – Easily extendable for new gameplay mechanics, textures, and enhancements.<br />
     <strong>Dynamic Collision Detection</strong> – Utilizes a <code>CollisionManager</code> to prevent player movement through walls.<br />
     <strong>Customizable Settings</strong> – Allows adjustment of FOV, render distance, player speed, and collision tolerance via an in-game settings menu.<br />
+    <strong>Easy Map Generation</strong> - Fully customizable map generation data provided by SVG files, provided by <a href="https://www.mazegenerator.net">Maze Generator</a><br />
     <br />
     Whether you're exploring the fundamentals of computer graphics or developing a retro-style game, Raygen provides a solid foundation for 2D raycasting in Java.
     <br />
@@ -113,7 +114,7 @@ Distributed under the **GPL License 3.0**. See `LICENSE.txt` for more informatio
 
 Kaden Landry - [Kaden L. LinkedIn](https://www.linkedin.com/in/kadenlandry)<br />
 Zachary Beaupre <br />
-Pablo Artero - [Pablo S. LinkedIn](https://www.linkedin.com/in/pablo-artero-sanrom%C3%A1n-8995382bb/)<br />
+Pablo Artero - [Pablo A. LinkedIn](https://www.linkedin.com/in/pablo-artero-sanrom%C3%A1n-8995382bb/)<br />
 
 Project Link: [https://github.com/LandryTech/Raygen](https://github.com/LandryTech/Raygen)
 
