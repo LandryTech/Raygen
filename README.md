@@ -35,7 +35,6 @@
     <a href="https://github.com/LandryTech/Raygen"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/LandryTech/Raygen">View Demo</a>
     &middot;
     <a href="https://github.com/LandryTech/Raygen/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
