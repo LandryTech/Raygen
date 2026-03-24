@@ -42,20 +42,6 @@
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#built-with">Built With</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#top-contributors">Top Contributors</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
@@ -102,6 +88,24 @@ Raygen is designed to be easy to use and extend. Here's a quick guide to get sta
 * **Raycasting Algorithm**: Inspired by classic raycasting techniques used in the early 3D games like Wolfenstein 3D.
 * **Open Source Community**: For continuous inspiration.
 
+<!-- SHOWCASE -->
+## Raygen Showcase
+### Default Included SVG Maps
+<img src="images/map1.png" alt="Logo" width="100" height="100">
+<img src="images/map2.png" alt="Logo" width="100" height="100">
+<img src="images/map3.png" alt="Logo" width="100" height="100">
+
+### Initial Map Selection
+<img src="images/mapSelection.png" alt="Logo" width="600" height="600">
+
+### Ingame View
+<img src="images/raygenIngame.png" alt="Logo" width="1280" height="800">
+
+### 360 Degree Adjustable FOV
+<img src="images/360fovExample.png" alt="Logo" width="1280" height="800">
+
+### Ingame Settings Menu
+<img src="images/ingameSettingsMenu.png" alt="Logo" width="900" height="300">
 
 <!-- LICENSE -->
 ## License
