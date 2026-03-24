@@ -91,21 +91,21 @@ Raygen is designed to be easy to use and extend. Here's a quick guide to get sta
 <!-- SHOWCASE -->
 ## Raygen Showcase
 ### Default Included SVG Maps
-<img src="images/map1.png" alt="Logo" width="100" height="100">
-<img src="images/map2.png" alt="Logo" width="100" height="100">
-<img src="images/map3.png" alt="Logo" width="100" height="100">
+<img src="images/map1.jpg" alt="map1" width="100" height="100">
+<img src="images/map2.jpg" alt="map2" width="100" height="100">
+<img src="images/map3.jpg" alt="map3" width="100" height="100">
 
 ### Initial Map Selection
-<img src="images/mapSelection.png" alt="Logo" width="600" height="600">
+<img src="images/mapSelection.png" alt="map selector" width="600" height="600">
 
 ### Ingame View
-<img src="images/raygenIngame.png" alt="Logo" width="1280" height="800">
+<img src="images/raygenIngame.png" alt="ingame image" width="1280" height="800">
 
 ### 360 Degree Adjustable FOV
-<img src="images/360fovExample.png" alt="Logo" width="1280" height="800">
+<img src="images/360fovExample.png" alt="adjustable fov" width="1280" height="800">
 
 ### Ingame Settings Menu
-<img src="images/ingameSettingsMenu.png" alt="Logo" width="900" height="300">
+<img src="images/ingameSettingsMenu.png" alt="ingame settings menu" width="900" height="300">
 
 <!-- LICENSE -->
 ## License
